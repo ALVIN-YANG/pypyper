@@ -3,9 +3,15 @@ __author__ = 'ylq'
 __date__ = '2017/12/28 下午12:18'
 
 import xadmin
+from xadmin import views
 
 from .models import EmailVerifyRecord
 from .models import Banner
+
+
+class BaseSetting(object):
+    enable_themes = True
+    use_bootswatch = True
 
 
 class EmailVerifyRecordAdmin(object):
@@ -22,3 +28,4 @@ class BannerAdmin(object):
 
 xadmin.site.register(EmailVerifyRecord, EmailVerifyRecordAdmin)
 xadmin.site.register(Banner, BannerAdmin)
+xadmin.site.register(views.BaseAdminView, BaseSetting)
