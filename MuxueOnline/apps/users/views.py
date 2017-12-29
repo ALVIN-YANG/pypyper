@@ -4,11 +4,11 @@ from django.contrib.auth import authenticate, login
 # Create your views here.
 
 
-def login(request):
+def user_login(request):
     if request.method == "POST":
         user_name = request.POST.get("username", "")
         pass_word = request.POST.get("password", "")
-        user = authenticate(user_name, pass_word)
+        user = authenticate(username=user_name, password=pass_word)
         if user is not None:
             login(request, user)
             return reduce(request, "index.html")
