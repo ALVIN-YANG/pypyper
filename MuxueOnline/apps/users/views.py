@@ -11,7 +11,7 @@ def user_login(request):
         user = authenticate(username=user_name, password=pass_word)
         if user is not None:
             login(request, user)
-            return reduce(request, "index.html")
+            return render(request, "index.html")
         else:
             return render(request, "login.html", {})
     elif request.method == "GET":
