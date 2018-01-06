@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'operation',
     'xadmin',
     'crispy_forms',
+    'captcha',
 ]
 
 AUTH_USER_MODEL = "users.UserProfile"
@@ -145,4 +146,10 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
 
+EMAIL_HOST = "smtp.sohu.com"
+EMAIL_PORT = 25
+EMAIL_HOST_USER = "ylq_lucky@sohu.com"
+EMAIL_HOST_PASSWORD = "lovelife8023"
+EMAIL_USE_TLS = False
+EMAIL_FROM = "ylq_lucky@sohu.com"
 django.setup()
