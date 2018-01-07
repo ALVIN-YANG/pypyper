@@ -20,7 +20,7 @@ from django.contrib import admin
 
 import xadmin
 
-from users.views import LoginView, RegisterView, ActiveUserView
+from users.views import LoginView, RegisterView, ActiveUserView, ForgetPwd, ResetView
 
 urlpatterns = [
     url(r'^xadmin/', xadmin.site.urls),
@@ -30,4 +30,6 @@ urlpatterns = [
     url('^register/$', RegisterView.as_view(), name="register"),
     url(r'^captcha/', include('captcha.urls')),
     url(r'^active/(?P<active_code>.*)/$', ActiveUserView.as_view(), name="user_active"),
+    url(r'^forget/$', ForgetPwd.as_view(), name="forget_pwd"),
+    url(r'^reset/(?P<active_code>.*)/$', ResetView.as_view(), name="reset_pwd"),
 ]
