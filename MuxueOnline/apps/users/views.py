@@ -6,11 +6,22 @@ from django.db.models import Q
 from django.views.generic.base import View
 from django.contrib.auth.hashers import make_password
 
-from .models import UserProfile
+from .models import UserProfile, EmailVerifyRecord
 from .forms import LoginForm, RegisterForm
 from utils.email_send import send_register_email
 # Create your views here.
 
+
+class ActiveUserView(View):
+    def get(self, request, active_code):
+        all_records = EmailVerifyRecord.objects.filter(code=active_code)
+        if active_code:
+            for record in all_records:
+                email = record.email
+                user = UserProfile.objects.get(email=email)
+                user.is_active = True
+                user.save()
+        return render(request, "login.html")
 
 class RegisterView(View):
     def get(self, request):
@@ -25,12 +36,16 @@ class RegisterView(View):
             user_profile = UserProfile()
             user_profile.username = user_name
             user_profile.email = user_name
+            user_profile.is_active = False
             user_profile.password = make_password(pass_word)
             user_profile.save()
             send_register_email(user_name, "register")
+
+            return render(request, "login.html")
+
         else:
             print u"验证失败"
-
+            return render(request, "register.html", {'register_form': register_form})
 
 class LoginView(View):
     def get(self, request):
@@ -43,8 +58,11 @@ class LoginView(View):
             pass_word = request.POST.get("password", "")
             user = authenticate(username=user_name, password=pass_word)
             if user is not None:
-                login(request, user)
-                return render(request, "index.html")
+                if user.is_active:
+                    login(request, user)
+                    return render(request, "index.html")
+                else:
+                    return render(request, "login.html", {"msg": "用户未激活"})
             else:
                 return render(request, "login.html", {"msg": "用户名或密码错误!"})
 
