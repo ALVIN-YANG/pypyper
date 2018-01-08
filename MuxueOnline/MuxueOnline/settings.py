@@ -152,4 +152,9 @@ EMAIL_HOST_USER = "ylq_lucky@sohu.com"
 EMAIL_HOST_PASSWORD = "lovelife8023"
 EMAIL_USE_TLS = False
 EMAIL_FROM = "ylq_lucky@sohu.com"
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
 django.setup()
