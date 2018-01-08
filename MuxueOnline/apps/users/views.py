@@ -102,6 +102,7 @@ class ForgetPwd(View):
 
 
 class ResetView(View):
+
     def get(self, request, active_code):
         all_records = EmailVerifyRecord.objects.filter(code=active_code)
         if all_records:
@@ -112,6 +113,8 @@ class ResetView(View):
         #     提示用户你的链接有误
             return render(request, "active_fail.html")
 
+
+class ModifyPwd(View):
     def post(self, request):
         modify_form = ModifyPwdForm(request.POST)
         if modify_form.is_valid():
@@ -123,8 +126,10 @@ class ResetView(View):
             user = UserProfile.objects.get(email=email)
             user.password = make_password(pwd2)
             user.save()
-
-            return render(request, "index.html")
+            return render(request, "login.html")
         else:
             email = request.POST.get("email")
             return render(request, "password_reset.html", {"email": email, "modify_form": modify_form})
+
+
+
