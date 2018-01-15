@@ -1,3 +1,4 @@
+# _*_ encoding:utf-8 _*_
 """
 Django settings for MuxueOnline project.
 
@@ -83,6 +84,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                # 上下文处理器, 可自动将 MEDIA_URL 注册, 才能在文件中调用该值
+                # 'django.template.context_processors',
             ],
         },
     },
