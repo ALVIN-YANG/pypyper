@@ -45,7 +45,7 @@
 				</li>
 			</ul>
 		</div>
-		<div class="all">共<span class="key">15</span>家</div>
+		<div class="all">共<span class="key">{{ org_nums }}</span>家</div>
 		<div class="butler_list company list">
 		<div class="layout">
 			<div class="head">
@@ -59,7 +59,7 @@
                     <dl class="des difdes">
                     <dt>
                         <a href="org-detail-homepage.html">
-{#                            <img width="200" height="120" class="scrollLoading" data-url="{{ MEDIA_URL }}{{ course_org.image }}"/>#}
+                            <img width="200" height="120" class="scrollLoading" data-url="{{ MEDIA_URL }}{{ course_org.image }}"/>
                         </a>
                     </dt>
                     <dd>
@@ -90,34 +90,15 @@
                     <div class="buy start_groupbuy jsShowPerfect2" data-id="22"><br/>联系<br/>服务</div>
                 </dl>
                 {% endfor %}
+
+
 		</div>
 		 <div class="pageturn">
             <ul class="pagelist">
-
-
-
-
-
                             <li class="active"><a href="?page=1">1</a></li>
-
-
-
-
-
                             <li><a href="?page=2" class="page">2</a></li>
-
-
-
-
-
                             <li><a href="?page=3" class="page">3</a></li>
-
-
-
-
                     <li class="long"><a href="?page=2">下一页</a></li>
-
-
             </ul>
         </div>
 		</div>
@@ -146,7 +127,6 @@
 		<div class="right companyrank layout">
 			<div class="head">授课机构排名</div>
 
-
                 <dl class="des">
                     <dt class="num fl">1</dt>
                     <dd>
@@ -170,9 +150,6 @@
                         <p>北京市</p>
                     </dd>
                 </dl>
-
-
-
 
 		</div>
         </div>

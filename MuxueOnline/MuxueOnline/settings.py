@@ -85,7 +85,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 # 上下文处理器, 可自动将 MEDIA_URL 注册, 才能在文件中调用该值
-                # 'django.template.context_processors',
+                'django.template.context_processors.media',
             ],
         },
     },
@@ -156,8 +156,8 @@ EMAIL_HOST_PASSWORD = "lovelife8023"
 EMAIL_USE_TLS = False
 EMAIL_FROM = "ylq_lucky@sohu.com"
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+MEDIA_URL = '/media/'
 
 django.setup()
