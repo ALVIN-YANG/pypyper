@@ -1,10 +1,11 @@
 # _*_ encoding:utf-8 _*_
 from django.shortcuts import render
 from django.views.generic import View
+from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
+from django.http import HttpResponse
 
 from .models import CourseOrg, CityDict
-from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
-
+from forms import UserAskForm
 
 class OrgView(View):
     """
@@ -55,3 +56,16 @@ class OrgView(View):
             "hot_orgs": hot_orgs,
             "sort": sort,
         })
+
+
+class AddUserAskView(View):
+    """
+    用户添加咨询
+    """
+    def post(self, request):
+        userask_form = UserAskForm(request.POST)
+        if userask_form.is_valid():
+            user_ask = userask_form.save(commit=True)
+            return HttpResponse('{"status":"success"}', content_type='application/json')
+        else:
+            return HttpResponse('{"status":"failure", "msg":"添加出错"}'.format(userask_form.errors), content_type='application/json')
