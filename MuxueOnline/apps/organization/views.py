@@ -6,12 +6,12 @@ from django.http import HttpResponse
 
 from .models import CourseOrg, CityDict
 from forms import UserAskForm
+import json
 
 class OrgView(View):
     """
     课程机构列表功能
     """
-
     def get(self, request):
         # 课程机构
         all_orgs = CourseOrg.objects.all()
@@ -66,6 +66,6 @@ class AddUserAskView(View):
         userask_form = UserAskForm(request.POST)
         if userask_form.is_valid():
             user_ask = userask_form.save(commit=True)
-            return HttpResponse('{"status":"success"}', content_type='application/json')
+            return HttpResponse(json.dumps({'status': 'success'}), content_type='application/json')
         else:
-            return HttpResponse('{"status":"failure", "msg":"添加出错"}'.format(userask_form.errors), content_type='application/json')
+            return HttpResponse(json.dumps({'status': 'fail', 'msg': '添加出错'}), content_type='application/json')
