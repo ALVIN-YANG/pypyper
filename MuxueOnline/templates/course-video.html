@@ -77,10 +77,10 @@
                         <ul class="video">
                             {% for video in lesson.get_lesson_video %}
                                 <li>
-                                <a target="_blank" href='{{ video.url }}' class="J-media-item studyvideo">{{ video.name }}({{ video.learn_times }})
+                                <a target="_blank" href='{% url 'course:video_play' video.id %}' class="J-media-item studyvideo">{{ video.name }}({{ video.learn_times }})
                                     <i class="study-state"></i>
                                 </a>
-                            </li>
+                                </li>
                             {% endfor %}
                         </ul>
                     </div>
@@ -135,13 +135,14 @@
                             <div class="cp-tab-pannel js-comp-tab-pannel" data-pannel="course" style="display: block">
                                 <!-- img 200 x 112 -->
                                 <ul class="other-list">
-
-                                    <li class="curr">
-                                        <a href="course-detail.html" target="_blank">
-                                            <img src="{% static 'media/courses/2016/11/540e57300001d6d906000338-240-135_n0L8vbw.jpg' %}" alt="django与vuejs实战项目2">
-                                            <span class="name autowrap">django与vuejs实战项目2</span>
+                                    {% for cours in relate_courses %}
+                                        <li class="curr">
+                                        <a href="{% url 'course:course_detail' cours.id %}" target="_blank">
+                                            <img src="{{ MEDIA_URL }}{{ cours.image }}" alt="{{ cours.id }}">
+                                            <span class="name autowrap">{{ cours.name }}</span>
                                         </a>
                                     </li>
+                                    {% endfor %}
 
                                 </ul>
                             </div>
