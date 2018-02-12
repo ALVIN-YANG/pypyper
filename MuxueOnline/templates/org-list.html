@@ -3,6 +3,17 @@
 
 {% load staticfiles %}
 
+{% block custom_bread %}
+    <section>
+        <div class="wp">
+            <ul class="crumbs">
+                <li><a href="index.html">首页</a>></li>
+                <li>课程机构</li>
+            </ul>
+        </div>
+    </section>
+{% endblock %}
+
 {% block custom_js %}
     <script>
         $(function () {
@@ -27,17 +38,6 @@
         })
 
     </script>
-{% endblock %}
-
-{% block custom_bread %}
-    <section>
-        <div class="wp">
-            <ul class="crumbs">
-                <li><a href="index.html">首页</a>></li>
-                <li>课程机构</li>
-            </ul>
-        </div>
-    </section>
 {% endblock %}
 
 {% block content %}
