@@ -7,8 +7,9 @@ from django.views.generic.base import View
 from django.contrib.auth.hashers import make_password
 
 from .models import UserProfile, EmailVerifyRecord
-from .forms import LoginForm, RegisterForm, ForgetForm, ModifyPwdForm
+from .forms import LoginForm, RegisterForm, ForgetForm, ModifyPwdForm, UploadImageForm
 from utils.email_send import send_register_email
+from utils.mixin_utils import LoginRequiredMixin
 # Create your views here.
 
 
@@ -110,7 +111,7 @@ class ResetView(View):
                 email = record.email
                 return render(request, "password_reset.html", {"email": email})
         else:
-        #     提示用户你的链接有误
+            # 提示用户你的链接有误
             return render(request, "active_fail.html")
 
 
@@ -132,4 +133,22 @@ class ModifyPwd(View):
             return render(request, "password_reset.html", {"email": email, "modify_form": modify_form})
 
 
+class UserinfoView(LoginRequiredMixin, View):
+    """
+    用户个人信息
+    """
+    def get(self, request):
+        return render(request, 'usercenter-info.html', {})
 
+
+class UploadImageView(LoginRequiredMixin, View):
+    """
+    用户修改头像
+    """
+    def post(self, request):
+        image_form = UploadImageForm(request.POST, request.FILES, instance=request.user)
+        if image_form.is_valid():
+            image_form.save()
+            # image = image_form.cleaned_data['image']
+            # request.user.image = image
+            # request.user.save()

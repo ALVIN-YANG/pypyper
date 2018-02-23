@@ -4,6 +4,7 @@ from django.views.generic import View
 from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponse
 import json
+from django.db.models import Q
 
 from .models import CourseOrg, CityDict, Teacher
 from operation.models import UserFavorite
@@ -20,8 +21,17 @@ class OrgView(View):
         all_orgs = CourseOrg.objects.all()
         org_nums = all_orgs.count()
         hot_orgs = all_orgs.order_by("click_num")[:3]
+
+        current_nav = 'org'
+
         # 城市
         all_citys = CityDict.objects.all()
+
+        # 机构搜索
+        search_keyword = request.GET.get('keywords', "")
+        if search_keyword:
+            # i 开头 不区分大小写
+            all_orgs = all_orgs.filter(Q(name__icontains=search_keyword) | Q(desc__icontains=search_keyword))
 
         # 取出筛选城市
         city_id = request.GET.get('city', "")
@@ -58,6 +68,7 @@ class OrgView(View):
             "category": category,
             "hot_orgs": hot_orgs,
             "sort": sort,
+            "current_nav": current_nav,
         })
 
 
@@ -189,6 +200,15 @@ class TeacherListView(View):
     def get(self, request):
         all_teachers = Teacher.objects.all()
 
+        # 机构搜索
+        search_keyword = request.GET.get('keywords', "")
+        if search_keyword:
+            # i 开头 不区分大小写
+            all_teachers = all_teachers.filter(Q(name__icontains=search_keyword)
+                                               | Q(work_company__icontains=search_keyword)
+                                               | Q(work_position__icontains=search_keyword)
+                                               | Q(org__icontains=search_keyword))
+
         # 排序
         sort = request.GET.get('sort', "")
         if sort == "hot":
@@ -209,6 +229,7 @@ class TeacherListView(View):
         return render(request, "teachers-list.html", {
             "all_teachers": teachers,
             "sorted_teacher": sorted_teacher,
+            "sort": sort,
         })
 
 
